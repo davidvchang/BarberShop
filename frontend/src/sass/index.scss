@@ -1,0 +1,24 @@
+@use './variables';
+
+@use './styles/login';
+
+*{
+    padding: 0;
+    margin: 0;
+}
+
+input, button {
+    font-family: "Poppins", sans-serif;
+}
+
+
+.main, html{
+    background: #89B4E5;
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    min-height: 100vh;
+}
