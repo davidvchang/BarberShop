@@ -1,6 +1,9 @@
 @use './variables';
 
 @use './styles/login';
+@use './styles/navbar';
+@use './styles/dashboard';
+@use './styles/principal';
 
 *{
     padding: 0;
