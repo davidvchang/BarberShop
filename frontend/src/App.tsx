@@ -11,8 +11,6 @@ function App() {
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   
-
-  
   const handleLogin = () => {
     setIsAuthenticated(true);
   };

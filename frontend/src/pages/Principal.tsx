@@ -8,13 +8,10 @@ const Principal:React.FC = () => {
   return (
         <div className='principal'>
             <NavBar/>
-            <div>
-            <Routes>
-                <Route path='/dashboard' element={<Dashboard/>}/>
-                <Route path='/citas' element={<Citas/>}/>
-            </Routes>
-                
-            </div>
+              <Routes>
+                  <Route path='/dashboard' element={<Dashboard/>}/>
+                  <Route path='/citas' element={<Citas/>}/>
+              </Routes>
         
         </div>
   )
