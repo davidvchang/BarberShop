@@ -13,5 +13,6 @@ app.use(morgan("dev"))
 app.use(express.json())
 
 app.use('/api/clientes', clientsRoutes);
+app.use('/api/citas', clientsRoutes);
 
 export default app
