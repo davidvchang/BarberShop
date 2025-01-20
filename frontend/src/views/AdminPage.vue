@@ -1,6 +1,8 @@
 <script setup lang="ts">
   import { Scissors } from 'lucide-vue-next'
+  import { Users, Calendar } from 'lucide-vue-next';
   import CountStatisticsContainer from '../components/CountStatisticsContainer.vue'
+  import TableTodayAppointments from '../components/TableTodayAppointments.vue'
 </script>
 
 
@@ -9,17 +11,19 @@
 
     <!-- NAVBAR -->
     <div class="flex w-full h-14 bg-white shadow-md items-center p-3 gap-2">
-      <Scissors class="w-8 h-8"/>
+      <Scissors class="w-8 h-8 text-blue-600"/>
       <h1 class="text-2xl font-semibold">BarberShop</h1>
     </div>
 
-    <div class="px-10">
+    <div class="px-10 flex flex-col gap-10">
 
-      <div class="flex w-full justify-between">
-        <CountStatisticsContainer title="Total de Citas" number="8"/>
-        <CountStatisticsContainer title="Citas Para Hoy" number="2"/>
-        <CountStatisticsContainer title="Clientes Totales" number="23"/>
+      <div class="flex w-full justify-between gap-10">
+        <CountStatisticsContainer title="Total de Citas" :number="8" :icon="Calendar" color="text-purple-700"/>
+        <CountStatisticsContainer title="Citas Para Hoy" :number="3" :icon="Calendar" color="text-green-700"/>
+        <CountStatisticsContainer title="Clientes Totales" :number="23" :icon="Users" color="text-blue-600"/>
       </div>
+
+      <TableTodayAppointments/>
     </div>
 
   </div>

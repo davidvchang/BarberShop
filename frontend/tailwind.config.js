@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         "BGPrincipal": "#F3F4F6"
-      }
+      },
     },
   },
   plugins: [],
