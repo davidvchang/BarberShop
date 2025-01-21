@@ -21,7 +21,7 @@
 
       <div>
         <div class="flex items-center gap-3 pr-20">
-          <span>Bienvenido, <strong>David</strong></span>
+          <span>Bienvenido, <strong>David Valenzuela</strong></span>
           <div class="w-8 h-8 rounded-full bg-slate-400">
   
           </div>

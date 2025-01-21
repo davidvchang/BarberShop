@@ -1,10 +1,9 @@
 <script setup lang="ts">
     import type { Component } from 'vue';
-// import BtnAdd from '../components/BtnAdd.vue'
+    import SearchInput from '../components/SearchInput.vue'
 
     defineProps<{
         title: string,
-        // text_button: string,
         nameColumn1: string,
         nameColumn2: string,
         nameColumn3: string,
@@ -17,8 +16,10 @@
 <template>
     <div class="flex flex-col rounded-md overflow-hidden">
         <div class="bg-white py-5 px-7 border rounded-md flex justify-between items-center">
-            <span class="text-lg font-medium ">{{ title }}</span>
-            <!-- <BtnAdd :text="text_button"/> -->
+            <div class="flex gap-5 items-center">
+                <span class="text-lg font-medium ">{{ title }}</span>
+                <SearchInput/>
+            </div>
             <component v-if="btn_add" :is="btn_add" v-bind="btn_add_props" />
         </div>
         <table class="w-full border-collapse">
