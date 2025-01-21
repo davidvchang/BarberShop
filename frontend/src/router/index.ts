@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import AdminPage from '../views/AdminPage.vue'
 import ClientsPage from '../views/ClientsPage.vue'
+import ServicesPage from '../views/ServicesPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +20,11 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       // component: () => import('../views/AboutView.vue'),
     },
+    {
+      path: '/services',
+      name: 'ServicesPage',
+      component: ServicesPage
+    }
   ],
 })
 

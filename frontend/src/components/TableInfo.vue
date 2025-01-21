@@ -1,14 +1,33 @@
+<script setup lang="ts">
+    import type { Component } from 'vue';
+// import BtnAdd from '../components/BtnAdd.vue'
+
+    defineProps<{
+        title: string,
+        // text_button: string,
+        nameColumn1: string,
+        nameColumn2: string,
+        nameColumn3: string,
+        nameColumn4: string,
+        btn_add?: Component,
+        btn_add_props?: Record<string, unknown>
+    }>()
+</script>
 
 <template>
     <div class="flex flex-col rounded-md overflow-hidden">
+        <div class="bg-white py-5 px-7 border rounded-md flex justify-between items-center">
+            <span class="text-lg font-medium ">{{ title }}</span>
+            <!-- <BtnAdd :text="text_button"/> -->
+            <component v-if="btn_add" :is="btn_add" v-bind="btn_add_props" />
+        </div>
         <table class="w-full border-collapse">
-            <span class="text-lg font-medium pb-5 bg-white py-5 px-7 border rounded-md">Today's Appointments</span>
             <thead class="bg-BGPrincipal w-full">
                 <tr class="border">
-                    <th class="font-medium text-gray-500 py-3 pl-7 text-left text-xs">CLIENT</th>
-                    <th class="font-medium text-gray-500 py-3 text-left text-xs">SERVICE</th>
-                    <th class="font-medium text-gray-500 py-3 text-left text-xs">TIME</th>
-                    <th class="font-medium text-gray-500 py-3 text-left text-xs">STATUS</th>
+                    <th class="font-medium text-gray-500 py-3 pl-7 text-left text-xs">{{nameColumn1}}</th>
+                    <th class="font-medium text-gray-500 py-3 text-left text-xs">{{ nameColumn2 }}</th>
+                    <th class="font-medium text-gray-500 py-3 text-left text-xs">{{ nameColumn3 }}</th>
+                    <th class="font-medium text-gray-500 py-3 text-left text-xs">{{ nameColumn4 }}</th>
                 </tr>
             </thead>
             <tbody class="bg-white w-full">

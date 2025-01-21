@@ -19,17 +19,27 @@
         <h1 class="text-2xl font-semibold">BarberShop</h1>
       </div>
 
-      <!-- ABRIR Y CERRAR MENU LATRAL -->
-      <div v-if="toggleMenu === false">
-        <Menu class="w-8 h-8 absolute right-3 top-3  hover:text-blue-400 hover:cursor-pointer hover:transition-all duration-300" @click="isOpeonMenu"/>
+      <div>
+        <div class="flex items-center gap-3 pr-20">
+          <span>Bienvenido, <strong>David</strong></span>
+          <div class="w-8 h-8 rounded-full bg-slate-400">
+  
+          </div>
+        </div>
+  
+        <!-- ABRIR Y CERRAR MENU LATRAL -->
+        <div v-if="toggleMenu === false">
+          <Menu class="w-8 h-8 absolute right-3 top-3  hover:text-blue-400 hover:cursor-pointer hover:transition-all duration-300" @click="isOpeonMenu"/>
+        </div>
+        <div v-if="toggleMenu === true">
+          <SquareX class="w-8 h-8 fixed right-3 top-3 rotate-180  hover:text-blue-400 hover:cursor-pointer hover:transition-all duration-300" @click="isOpeonMenu"/>
+        </div>
+  
+        <div v-if="toggleMenu === true">
+            <LateralMenu/>
+        </div>
+        <!-- ----------------------------- -->
+        
       </div>
-      <div v-if="toggleMenu === true">
-        <SquareX class="w-8 h-8 fixed right-3 top-3 rotate-180  hover:text-blue-400 hover:cursor-pointer hover:transition-all duration-300" @click="isOpeonMenu"/>
-      </div>
-
-      <div v-if="toggleMenu === true">
-          <LateralMenu/>
-      </div>
-      <!-- ----------------------------- -->
     </div>
 </template>
