@@ -1,9 +1,13 @@
 <script setup lang="ts">
-  import AdminPage from './views/AdminPage.vue'
+  import { RouterView } from 'vue-router'
+  import NavBar from './components/NavBar.vue'
 </script>
 
 <template>
   <main>
-      <AdminPage/>
+    <NavBar/>
+    <div>
+      <RouterView />
+    </div>
   </main>
 </template>
