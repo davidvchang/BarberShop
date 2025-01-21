@@ -26,6 +26,7 @@
         <h1 class="text-2xl font-semibold">BarberShop</h1>
       </div>
 
+      <!-- ABRIR Y CERRAR MENU LATRAL -->
       <div v-if="toggleMenu === false">
         <Menu class="w-8 h-8 fixed right-3 top-3  hover:text-blue-400 hover:cursor-pointer hover:transition-all duration-300" @click="isOpeonMenu"/>
       </div>
@@ -36,6 +37,7 @@
       <div v-if="toggleMenu === true">
           <LateralMenu/>
       </div>
+      <!-- ----------------------------- -->
     </div>
     
     <div class="px-10 flex flex-col gap-10">
