@@ -18,9 +18,9 @@
     <div class="px-10 flex flex-col gap-10">
 
       <div class="flex w-full justify-between gap-10">
-        <CountStatisticsContainer title="Total de Citas" :number="8" :icon="Calendar" color="text-purple-700"/>
-        <CountStatisticsContainer title="Citas Para Hoy" :number="3" :icon="Calendar" color="text-green-700"/>
-        <CountStatisticsContainer title="Clientes Totales" :number="23" :icon="Users" color="text-blue-600"/>
+        <CountStatisticsContainer title="Total Appointments" :number="8" :icon="Calendar" color="text-purple-700"/>
+        <CountStatisticsContainer title="Today's Appointments" :number="3" :icon="Calendar" color="text-green-700"/>
+        <CountStatisticsContainer title="Total Clients" :number="23" :icon="Users" color="text-blue-600"/>
       </div>
 
       <TableTodayAppointments/>
