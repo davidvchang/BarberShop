@@ -1,6 +1,8 @@
 import { Router } from "express";
+import serviceController from '../controllers/services.controller.js';
 
 const router = Router();
 
-router.get("/")
-router.post("/")
+router.get("/", serviceController.getService)
+
+export default router
