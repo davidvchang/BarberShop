@@ -22,18 +22,18 @@ serviceController.postService = async (req, res) => {
         })
 
         await newService.save()
-        res.status(201).send("Se ha añadido correctamente el servicio")
+        res.status(201).send("The service has been created correctly.")
     } catch (ex) {
         res.status(500).send({message: "An error occurred while registering", error: ex.message})
         console.log(ex)
     }
 }
 
-serviceController.getOneService = async () => {
+serviceController.getOneService = async (req, res) => {
     try {
         const service = await serviceModels.findById(req.params.id)
         if (!service) {
-            return res.status(404).json({ message: "Service not found" })
+            return res.status(404).json("Service not found")
         }
 
         res.status(200).json(service)
@@ -43,21 +43,21 @@ serviceController.getOneService = async () => {
     }
 }
 
-serviceController.deleteService = async () => {
+serviceController.deleteService = async (req, res) => {
     try {
         const service = await serviceModels.findByIdAndDelete(req.params.id)
         if (!service) {
-            return res.status(404).json({ message: "Service not found" })
+            return res.status(404).json("Service not found")
         }
 
-        res.status(200).json(service)
+        res.status(200).json("The service has been deleted correctly.")
     } catch (ex) {
         res.status(500).send({message: "An error occurred while delete one service", error: ex.message})
         console.log(ex)
     }
 }
 
-serviceController.updateService = async () => {
+serviceController.updateService = async (req, res) => {
     const {name, price, description} = req.body;
 
     try {
@@ -68,10 +68,10 @@ serviceController.updateService = async () => {
         })
 
         if (!service) {
-            return res.status(404).json({ message: "Service not found" })
+            return res.status(404).json("Service not found")
         }
         
-        res.status(200).json(service)
+        res.status(200).json("The service has been updated correctly.")
     } catch (ex) {
         res.status(500).send({message: "An error occurred while updating one service", error: ex.message})
         console.log(ex)

@@ -8,6 +8,6 @@ router.post("/", serviceController.postService)
 
 router.get("/:id", serviceController.getOneService)
 router.delete("/:id", serviceController.deleteService)
-router.delete("/:id", serviceController.updateService)
+router.put("/:id", serviceController.updateService)
 
 export default router
