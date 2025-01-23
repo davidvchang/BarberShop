@@ -17,6 +17,7 @@
     }>()
 
     const dataServices = ref<DataForm[]>([])
+    const visibilityOptions = ref<Record<string, boolean>>({});
 
     interface DataForm{
         _id: string,
@@ -28,6 +29,17 @@
     const getServices = async () => {
         const res = await axios.get(urlAPI)
         dataServices.value = res.data
+    }
+
+    const toggleVisibility = (id: string) => {
+        if (visibilityOptions.value[id]) {
+            visibilityOptions.value[id] = false;
+        } else {
+            Object.keys(visibilityOptions.value).forEach(key => {
+                visibilityOptions.value[key] = false;
+            });
+            visibilityOptions.value[id] = true;
+        }
     }
 
     onMounted(() => {
@@ -59,7 +71,14 @@
                     <td class="py-4 text-sm">${{ service.price }}</td>
                     <td class="py-4 text-sm">{{ service.description }}</td>
                     <td class="py-4 text-sm">
-                            <button class="flex gap-1 py-1 px-2 text-[13px] items-center bg-blue-50 text-sky-600 font-medium rounded-sm hover:bg-sky-100 hover:transition-all duration-300">Options <ChevronDown class="text-blue-500 w-5 h-5"/></button>
+                        <div class="w-fit relative">
+                            <button class="flex gap-1 py-1 px-2 text-[13px] items-center bg-blue-50 text-sky-600 font-medium rounded-sm hover:bg-sky-100 hover:transition-all duration-300" @click="toggleVisibility(service._id)">Options <ChevronDown class="text-blue-500 w-5 h-5"/></button>
+                            <div class="flex flex-col gap-2 absolute z-50 w-24 top-8 right-0 bg-white border shadow-md p-1 rounded" v-if="visibilityOptions[service._id]">
+                                <button class="py-1 hover:text-yellow-600 hover:transition-colors duration-300 rounded font-light">Edit</button>
+                                <button class="py-1 hover:text-red-600 hover:transition-colors duration-300 rounded font-light">Delete</button>
+                            </div>
+
+                        </div>
                     </td>
                 </tr>
             </tbody>
