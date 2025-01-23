@@ -1,8 +1,9 @@
 <script setup lang="ts">
     import axios from "axios";
+    import Swal from "sweetalert2";
     import { reactive } from "vue";
 
-    const urlAPI: string = import.meta.env.VUE_APP_POST_SERVICE;
+    const urlAPI: string = import.meta.env.VITE_POST_SERVICE;
 
     defineProps<{
         closeModal: () => void
@@ -23,7 +24,22 @@
     const handleSubmit = async () => {
         console.log("API URL:", urlAPI);
         const res = await axios.post(urlAPI, formData)
-        console.log("res: ", res)
+        if(res.status === 201){
+            Swal.fire({
+                title: 'Saved',
+                text: 'The service has been saved correctly.',
+                icon: 'success',
+                confirmButtonText: 'Close'
+            })
+        }
+        else {
+            Swal.fire({
+                title: 'Error',
+                text: 'Has been happened a error while saved the service.',
+                icon: 'error',
+                confirmButtonText: 'Close'
+            })
+        }
     }
 </script>
 
