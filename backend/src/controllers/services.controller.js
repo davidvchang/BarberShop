@@ -49,11 +49,33 @@ serviceController.deleteService = async () => {
         if (!service) {
             return res.status(404).json({ message: "Service not found" })
         }
-        
+
         res.status(200).json(service)
     } catch (ex) {
-        res.status(500).send({message: "An error occurred while getting one service", error: ex.message})
+        res.status(500).send({message: "An error occurred while delete one service", error: ex.message})
         console.log(ex)
     }
 }
+
+serviceController.updateService = async () => {
+    const {name, price, description} = req.body;
+
+    try {
+        const service = await serviceModels.findByIdAndUpdate(req.params.id, {
+            name,
+            price,
+            description
+        })
+
+        if (!service) {
+            return res.status(404).json({ message: "Service not found" })
+        }
+        
+        res.status(200).json(service)
+    } catch (ex) {
+        res.status(500).send({message: "An error occurred while updating one service", error: ex.message})
+        console.log(ex)
+    }
+}
+
 export default serviceController
