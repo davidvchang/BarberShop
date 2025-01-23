@@ -73,7 +73,7 @@
                     <td class="py-4 text-sm">
                         <div class="w-fit relative">
                             <button class="flex gap-1 py-1 px-2 text-[13px] items-center bg-blue-50 text-sky-600 font-medium rounded-sm hover:bg-sky-100 hover:transition-all duration-300" @click="toggleVisibility(service._id)">Options <ChevronDown class="text-blue-500 w-5 h-5"/></button>
-                            <div class="flex flex-col gap-2 absolute z-50 w-24 top-8 right-0 bg-white border shadow-md p-1 rounded" v-if="visibilityOptions[service._id]">
+                            <div class="flex flex-col gap-2 absolute z-50 w-full top-8 bg-white border shadow-md p-1 rounded" v-if="visibilityOptions[service._id]">
                                 <button class="py-1 hover:text-yellow-600 hover:transition-colors duration-300 rounded font-light">Edit</button>
                                 <button class="py-1 hover:text-red-600 hover:transition-colors duration-300 rounded font-light">Delete</button>
                             </div>
