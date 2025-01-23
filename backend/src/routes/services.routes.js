@@ -6,4 +6,5 @@ const router = Router();
 router.get("/", serviceController.getService)
 router.post("/", serviceController.postService)
 
+router.get("/:id", serviceController.getOneService)
 export default router
