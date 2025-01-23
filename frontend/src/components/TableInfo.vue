@@ -1,6 +1,10 @@
 <script setup lang="ts">
-    import type { Component } from 'vue';
+    import { ChevronDown } from 'lucide-vue-next';
+    import { onMounted, ref, type Component } from 'vue';
     import SearchInput from '../components/SearchInput.vue'
+    import axios from 'axios';
+
+    const urlAPI: string = import.meta.env.VITE_POST_SERVICE;
 
     defineProps<{
         title: string,
@@ -11,6 +15,24 @@
         btn_add?: Component,
         btn_add_props?: Record<string, unknown>
     }>()
+
+    const dataServices = ref<DataForm[]>([])
+
+    interface DataForm{
+        _id: string,
+        name: string,
+        price: number | null,
+        description: string
+    }
+
+    const getServices = async () => {
+        const res = await axios.get(urlAPI)
+        dataServices.value = res.data
+    }
+
+    onMounted(() => {
+        getServices();
+    });
 </script>
 
 <template>
@@ -32,67 +54,14 @@
                 </tr>
             </thead>
             <tbody class="bg-white w-full">
-                <tr class="border">
-                    <td class="py-4 pl-7 text-sm">David Valenzuela</td>
-                    <td class="py-4 text-sm">Haircut</td>
-                    <td class="py-4 text-sm">03:00 PM</td>
+                <tr class="border"  v-for="service in dataServices" :key="service._id">
+                    <td class="py-4 pl-7 text-sm">{{ service.name }}</td>
+                    <td class="py-4 text-sm">${{ service.price }}</td>
+                    <td class="py-4 text-sm">{{ service.description }}</td>
                     <td class="py-4 text-sm">
-                        <div class="py-0 px-2 bg-[#b8f0cc] w-min rounded-2xl">
-                            <span class="text-xs text-green-800 font-semibold">Confirmed</span>
-                        </div>
+                            <button class="flex gap-1 py-1 px-2 text-[13px] items-center bg-blue-50 text-sky-600 font-medium rounded-sm hover:bg-sky-100 hover:transition-all duration-300">Options <ChevronDown class="text-blue-500 w-5 h-5"/></button>
                     </td>
                 </tr>
-                <tr class="border">
-                    <td class="py-4 pl-7 text-sm">Rogelio Luna</td>
-                    <td class="py-4 text-sm">Haircut</td>
-                    <td class="py-4 text-sm">02:00 PM</td>
-                    <td class="py-4 text-sm">
-                        <div class="py-0 px-2 bg-[#ffc1c1] w-min rounded-2xl">
-                            <span class="text-xs text-red-800 font-semibold">Canceled</span>
-                        </div>
-                    </td>
-                </tr>
-                <tr class="border">
-                    <td class="py-4 pl-7 text-sm">Daniel Gaxiola</td>
-                    <td class="py-4 text-sm">Haircut</td>
-                    <td class="py-4 text-sm">01:00 PM</td>
-                    <td class="py-4 text-sm">
-                        <div class="py-0 px-2 bg-[#b8f0cc] w-min rounded-2xl">
-                            <span class="text-xs text-green-800 font-semibold">Confirmed</span>
-                        </div>
-                    </td>
-                </tr>
-                <tr class="border">
-                    <td class="py-4 pl-7 text-sm">Roger Jhonson</td>
-                    <td class="py-4 text-sm">Haircut</td>
-                    <td class="py-4 text-sm">12:00 PM</td>
-                    <td class="py-4 text-sm">
-                        <div class="py-0 px-2 bg-[#b8f0cc] w-min rounded-2xl">
-                            <span class="text-xs text-green-800 font-semibold">Confirmed</span>
-                        </div>
-                    </td>
-                </tr>
-                <tr class="border">
-                    <td class="py-4 pl-7 text-sm">Tomas Salazar</td>
-                    <td class="py-4 text-sm">Haircut</td>
-                    <td class="py-4 text-sm">11:00 AM</td>
-                    <td class="py-4 text-sm">
-                        <div class="py-0 px-2 bg-[#b8f0cc] w-min rounded-2xl">
-                            <span class="text-xs text-green-800 font-semibold">Confirmed</span>
-                        </div>
-                    </td>
-                </tr>
-                <tr class="border">
-                    <td class="py-4 pl-7 text-sm">Kevin Ortiz</td>
-                    <td class="py-4 text-sm">Haircut</td>
-                    <td class="py-4 text-sm">10:00 AM</td>
-                    <td class="py-4 text-sm">
-                        <div class="py-0 px-2 bg-[#b8f0cc] w-min rounded-2xl">
-                            <span class="text-xs text-green-800 font-semibold">Confirmed</span>
-                        </div>
-                    </td>
-                </tr>
-                
             </tbody>
         </table>
 

@@ -2,7 +2,6 @@
     import TableInfo from '../components/TableInfo.vue'
     import BtnAdd from '../components/BtnAdd.vue'
     import AddService from '../views/AddService.vue'
-
     import { ref } from 'vue';
 
     const valueModal = ref(false)
@@ -10,7 +9,6 @@
     const toggleValueModal = () => {
         valueModal.value = !valueModal.value
     }
-
 </script>
 
 <template>
