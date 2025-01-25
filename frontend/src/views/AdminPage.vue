@@ -2,7 +2,7 @@
     import { Users, Calendar} from 'lucide-vue-next';
 
     import CountStatisticsContainer from '../components/CountStatisticsContainer.vue'
-    import TableInfo from '../components/TableInfo.vue'
+    import TableAppointmentToday from '../components/TableAppointmentToday.vue'
   </script>
 
 
@@ -16,6 +16,7 @@
           <CountStatisticsContainer title="Total Clients" :number="23" :icon="Users" color="text-blue-600"/>
         </div>
 
-          <TableInfo title="Today´s Appointments" name-column1="CLIENT" name-column2="SERVICE" name-column3="TIME" name-column4="STATUS"/>
+        <TableAppointmentToday/>
+          
       </div>
   </template>

@@ -13,7 +13,7 @@
         nameColumn3: string,
         nameColumn4: string,
         btn_add?: Component,
-        btn_add_props?: Record<string, unknown>
+        btn_add_props?: Record<string, unknown>,
     }>()
 
     const dataServices = ref<DataForm[]>([])
