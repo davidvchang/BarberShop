@@ -3,6 +3,7 @@
     import { onMounted, ref, type Component } from 'vue';
     import SearchInput from '../components/SearchInput.vue'
     import axios from 'axios';
+import Swal from 'sweetalert2';
 
     const urlAPI: string = import.meta.env.VITE_POST_SERVICE;
 
@@ -42,6 +43,26 @@
         }
     }
 
+    const deleteService = async (id_service: number) => {
+        const res = await axios.delete(urlAPI + id_service)
+        if(res.status === 200) {
+            Swal.fire({
+                title: 'Deleted',
+                text: 'The service has been deleted correctly.',
+                icon: 'success',
+                confirmButtonText: 'Close'
+            })
+        }
+        else {
+            Swal.fire({
+                title: 'Error',
+                text: 'Has been happened a error while deleted the service.',
+                icon: 'error',
+                confirmButtonText: 'Close'
+            })
+        }
+    }
+
     onMounted(() => {
         getServices();
     });
@@ -75,7 +96,7 @@
                             <button class="flex gap-1 py-1 px-2 text-[13px] items-center bg-blue-50 text-sky-600 font-medium rounded-sm hover:bg-sky-100 hover:transition-all duration-300" @click="toggleVisibility(service._id)">Options <ChevronDown class="text-blue-500 w-5 h-5"/></button>
                             <div class="flex flex-col gap-2 absolute z-40 w-full top-8 bg-white border shadow-md p-1 rounded" v-if="visibilityOptions[service._id]">
                                 <button class="py-1 hover:text-yellow-600 hover:transition-colors duration-300 rounded font-light">Edit</button>
-                                <button class="py-1 hover:text-red-600 hover:transition-colors duration-300 rounded font-light">Delete</button>
+                                <button class="py-1 hover:text-red-600 hover:transition-colors duration-300 rounded font-light" @click="deleteService(service._id)">Delete</button>
                             </div>
 
                         </div>
