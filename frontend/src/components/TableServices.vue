@@ -43,7 +43,7 @@ import Swal from 'sweetalert2';
         }
     }
 
-    const deleteService = async (id_service: number) => {
+    const deleteService = async (id_service: string) => {
         const res = await axios.delete(urlAPI + id_service)
         if(res.status === 200) {
             Swal.fire({
@@ -52,6 +52,8 @@ import Swal from 'sweetalert2';
                 icon: 'success',
                 confirmButtonText: 'Close'
             })
+
+            getServices()
         }
         else {
             Swal.fire({
