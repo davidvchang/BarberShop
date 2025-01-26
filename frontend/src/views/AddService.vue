@@ -1,12 +1,13 @@
 <script setup lang="ts">
     import axios from "axios";
     import Swal from "sweetalert2";
-    import { reactive} from "vue";
+    import { reactive, watch} from "vue";
 
     const urlAPI: string = import.meta.env.VITE_POST_SERVICE;
 
     const props = defineProps<{
         closeModal: () => void,
+        serviceToEdit?: DataForm
     }>()
 
     interface DataForm{
@@ -14,7 +15,7 @@
         price: number | null,
         description: string
     }
-
+    
     const formData = reactive<DataForm>({
         name: "",
         price: null,
@@ -22,25 +23,62 @@
     });
 
     const handleSubmit = async () => {
-        const res = await axios.post(urlAPI, formData)
-        if(res.status === 201){
-            Swal.fire({
-                title: 'Saved',
-                text: 'The service has been saved correctly.',
-                icon: 'success',
-                confirmButtonText: 'Close'
-            })
+        if (props.serviceToEdit) {
+            const res = await axios.put(`${urlAPI}/${props.serviceToEdit._id}`, formData)
+                if(res.status === 200){
+                    Swal.fire({
+                        title: 'Updated',
+                        text: 'The service has been updated correctly.',
+                        icon: 'success',
+                        confirmButtonText: 'Close'
+                    })
+                    props.closeModal()
+                }
+                else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Has been happened a error while updated the service.',
+                        icon: 'error',
+                        confirmButtonText: 'Close'
+                    })
+                }
             props.closeModal()
         }
         else {
-            Swal.fire({
-                title: 'Error',
-                text: 'Has been happened a error while saved the service.',
-                icon: 'error',
-                confirmButtonText: 'Close'
-            })
+            const res = await axios.post(urlAPI, formData)
+                if(res.status === 201){
+                    Swal.fire({
+                        title: 'Saved',
+                        text: 'The service has been saved correctly.',
+                        icon: 'success',
+                        confirmButtonText: 'Close'
+                    })
+                    props.closeModal()
+                }
+                else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Has been happened a error while saved the service.',
+                        icon: 'error',
+                        confirmButtonText: 'Close'
+                    })
+                }
+            props.closeModal()
         }
     }
+
+    watch(() => props.serviceToEdit, (newValue) => {
+        if (newValue) {
+            formData.name = newValue.name;
+            formData.price = newValue.price;
+            formData.description = newValue.description;
+        } else {
+            formData.name = "";
+            formData.price = null;
+            formData.description = "";
+        }
+    }, { immediate: true });
+
 </script>
 
 <template>
