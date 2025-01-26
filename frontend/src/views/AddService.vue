@@ -65,6 +65,7 @@
                 type="number" 
                 id="price" 
                 v-model="formData.price"
+                step="any"
                 class="mt-1 block w-full py-2 px-5 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm"
                 placeholder="Enter price"
                 />
