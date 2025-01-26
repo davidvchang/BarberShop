@@ -40,20 +40,18 @@ import Swal from 'sweetalert2';
     const getServicesForPages = async (page = actualPage.value, limit = 7) => {
         const res = await axios.get(`${urlAPIPages}?page=${page}&limit=${limit}`)
         dataServicesForPages.value = res.data
+        calcTotalNumberPages()
     }
 
     const getNumberServices = async () => {
         const res = await axios.get(urlAPI)
         countServices.value = res.data.length;
+        calcTotalNumberPages()
     }
 
     const calcTotalNumberPages = () => {
         const total:number = Math.ceil(countServices.value / 7);
-        console.log("TOTAL: ", total)
-
         totalPages.value = total
-        console.log("PAGINAS TOTALES: ", totalPages.value)
-
     }
 
     const toggleVisibility = (id: string) => {
@@ -100,9 +98,11 @@ import Swal from 'sweetalert2';
     }
 
     const nextPage = () => {
-        const newPage = actualPage.value + 1
-        actualPage.value = newPage
-        getServicesForPages()
+        if(actualPage.value < totalPages.value) {
+            const newPage = actualPage.value + 1
+            actualPage.value = newPage
+            getServicesForPages()
+        }
     }
 
     onMounted(() => {
@@ -125,18 +125,18 @@ import Swal from 'sweetalert2';
         <table class="w-full border-collapse">
             <thead class="bg-BGPrincipal w-full">
                 <tr class="border">
-                    <th class="font-medium text-gray-500 py-3 pl-7 text-left text-xs">{{nameColumn1}}</th>
-                    <th class="font-medium text-gray-500 py-3 text-left text-xs">{{ nameColumn2 }}</th>
-                    <th class="font-medium text-gray-500 py-3 text-left text-xs">{{ nameColumn3 }}</th>
-                    <th class="font-medium text-gray-500 py-3 text-left text-xs">{{ nameColumn4 }}</th>
+                    <th class="font-medium text-gray-500 py-3 pl-7 text-left text-xs w-1/4">{{nameColumn1}}</th>
+                    <th class="font-medium text-gray-500 py-3 text-left text-xs w-1/4">{{ nameColumn2 }}</th>
+                    <th class="font-medium text-gray-500 py-3 text-left text-xs w-1/4">{{ nameColumn3 }}</th>
+                    <th class="font-medium text-gray-500 py-3 text-left text-xs w-1/4">{{ nameColumn4 }}</th>
                 </tr>
             </thead>
             <tbody class="bg-white w-full">
                 <tr class="border"  v-for="service in dataServicesForPages" :key="service._id">
-                    <td class="py-4 pl-7 text-sm">{{ service.name }}</td>
-                    <td class="py-4 text-sm">${{ service.price }}</td>
-                    <td class="py-4 text-sm">{{ service.description }}</td>
-                    <td class="py-4 text-sm">
+                    <td class="py-4 pl-7 text-sm w-1/4">{{ service.name }}</td>
+                    <td class="py-4 text-sm w-1/4">${{ service.price }}</td>
+                    <td class="py-4 text-sm w-1/4">{{ service.description }}</td>
+                    <td class="py-4 text-sm w-1/4">
                         <div class="w-fit relative">
                             <button class="flex gap-1 py-1 px-2 text-[13px] items-center bg-blue-50 text-sky-600 font-medium rounded-sm hover:bg-sky-100 hover:transition-all duration-300" @click="toggleVisibility(service._id)">Options <ChevronDown class="text-blue-500 w-5 h-5"/></button>
                             <div class="flex flex-col gap-2 absolute z-40 w-full top-8 bg-white border shadow-md p-1 rounded" v-if="visibilityOptions[service._id]">
