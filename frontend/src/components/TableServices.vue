@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ChevronDown } from 'lucide-vue-next';
+    import { ChevronDown, ChevronRight, ChevronLeft } from 'lucide-vue-next';
     import { onMounted, ref, type Component } from 'vue';
     import SearchInput from '../components/SearchInput.vue'
     import axios from 'axios';
@@ -19,6 +19,7 @@ import Swal from 'sweetalert2';
 
     const dataServices = ref<DataForm[]>([])
     const visibilityOptions = ref<Record<string, boolean>>({});
+    const countServices = ref<number>(0)
 
     interface DataForm{
         _id: string,
@@ -30,6 +31,11 @@ import Swal from 'sweetalert2';
     const getServices = async () => {
         const res = await axios.get(urlAPI)
         dataServices.value = res.data
+    }
+
+    const getNumberServices = async () => {
+        const res = await axios.get(urlAPI)
+        countServices.value = res.data.length;
     }
 
     const toggleVisibility = (id: string) => {
@@ -67,6 +73,7 @@ import Swal from 'sweetalert2';
 
     onMounted(() => {
         getServices();
+        getNumberServices()
     });
 </script>
 
@@ -106,6 +113,14 @@ import Swal from 'sweetalert2';
                 </tr>
             </tbody>
         </table>
+
+        <div class="w-full flex justify-center items-center gap-10 pt-5">
+            <span class="text-sm">Total Services: <strong>{{ countServices }}</strong></span>
+            <button class="text-sm w-fit p-2 bg-white border rounded-md hover:bg-slate-50 hover:transition-colors duration-300"><ChevronLeft/></button>
+            <span class="text-lg"><strong>1</strong></span>
+            <button class="text-sm w-fit p-2 bg-white border rounded-md hover:bg-slate-50 hover:transition-colors duration-300"><ChevronRight/></button>
+            <span class="text-sm">Total Pages: <strong>2</strong></span>
+        </div>
 
     </div>
 </template>
