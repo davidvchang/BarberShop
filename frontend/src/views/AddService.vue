@@ -25,44 +25,44 @@
     const handleSubmit = async () => {
         if (props.serviceToEdit) {
             const res = await axios.put(`${urlAPI}/${props.serviceToEdit._id}`, formData)
-                if(res.status === 200){
-                    Swal.fire({
-                        title: 'Updated',
-                        text: 'The service has been updated correctly.',
-                        icon: 'success',
-                        confirmButtonText: 'Close'
-                    })
-                    props.closeModal()
-                }
-                else {
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Has been happened a error while updated the service.',
-                        icon: 'error',
-                        confirmButtonText: 'Close'
-                    })
-                }
+            if(res.status === 200){
+                Swal.fire({
+                    title: 'Updated',
+                    text: 'The service has been updated correctly.',
+                    icon: 'success',
+                    confirmButtonText: 'Close'
+                })
+                props.closeModal()
+            }
+            else {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Has been happened a error while updated the service.',
+                    icon: 'error',
+                    confirmButtonText: 'Close'
+                })
+            }
             props.closeModal()
         }
         else {
             const res = await axios.post(urlAPI, formData)
-                if(res.status === 201){
-                    Swal.fire({
-                        title: 'Saved',
-                        text: 'The service has been saved correctly.',
-                        icon: 'success',
-                        confirmButtonText: 'Close'
-                    })
-                    props.closeModal()
-                }
-                else {
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Has been happened a error while saved the service.',
-                        icon: 'error',
-                        confirmButtonText: 'Close'
-                    })
-                }
+            if(res.status === 201){
+                Swal.fire({
+                    title: 'Saved',
+                    text: 'The service has been saved correctly.',
+                    icon: 'success',
+                    confirmButtonText: 'Close'
+                })
+                props.closeModal()
+            }
+            else {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Has been happened a error while saved the service.',
+                    icon: 'error',
+                    confirmButtonText: 'Close'
+                })
+            }
             props.closeModal()
         }
     }
@@ -84,7 +84,7 @@
 <template>
     <div class="w-96 absolute top-2/4 left-2/4 transform -translate-x-1/2 -translate-y-1/2 bg-white p-5 border shadow-lg rounded-xl">
         <form class="space-y-4" @submit.prevent="handleSubmit">
-            <span class="text-2xl font-medium flex text-center w-full justify-center">Add Service</span>
+            <span class="text-2xl font-medium flex text-center w-full justify-center">{{props.serviceToEdit ? "Update Service" : "Add Service" }}</span>
             
             <div>
                 <label for="service-name" class="block text-sm font-medium text-gray-700">Service Name</label>
