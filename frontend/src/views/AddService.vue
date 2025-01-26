@@ -42,7 +42,6 @@
                     confirmButtonText: 'Close'
                 })
             }
-            props.closeModal()
         }
         else {
             const res = await axios.post(urlAPI, formData)
@@ -63,7 +62,6 @@
                     confirmButtonText: 'Close'
                 })
             }
-            props.closeModal()
         }
     }
 
