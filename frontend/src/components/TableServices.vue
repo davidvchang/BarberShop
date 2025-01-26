@@ -6,6 +6,7 @@
 import Swal from 'sweetalert2';
 
     const urlAPI: string = import.meta.env.VITE_POST_SERVICE;
+    const urlAPIPages: string = import.meta.env.VITE_POST_SERVICE_PAGES;
 
     defineProps<{
         title: string,
@@ -18,8 +19,11 @@ import Swal from 'sweetalert2';
     }>()
 
     const dataServices = ref<DataForm[]>([])
+    const dataServicesForPages = ref<DataForm[]>([])
     const visibilityOptions = ref<Record<string, boolean>>({});
     const countServices = ref<number>(0)
+    const totalPages = ref<number>(1)
+    const actualPage = ref<number>(1)
 
     interface DataForm{
         _id: string,
@@ -33,9 +37,23 @@ import Swal from 'sweetalert2';
         dataServices.value = res.data
     }
 
+    const getServicesForPages = async (page = actualPage.value, limit = 7) => {
+        const res = await axios.get(`${urlAPIPages}?page=${page}&limit=${limit}`)
+        dataServicesForPages.value = res.data
+    }
+
     const getNumberServices = async () => {
         const res = await axios.get(urlAPI)
         countServices.value = res.data.length;
+    }
+
+    const calcTotalNumberPages = () => {
+        const total:number = Math.ceil(countServices.value / 7);
+        console.log("TOTAL: ", total)
+
+        totalPages.value = total
+        console.log("PAGINAS TOTALES: ", totalPages.value)
+
     }
 
     const toggleVisibility = (id: string) => {
@@ -50,7 +68,7 @@ import Swal from 'sweetalert2';
     }
 
     const deleteService = async (id_service: string) => {
-        const res = await axios.delete(urlAPI + id_service)
+        const res = await axios.delete(`${urlAPI}/${id_service}`)
         if(res.status === 200) {
             Swal.fire({
                 title: 'Deleted',
@@ -59,7 +77,9 @@ import Swal from 'sweetalert2';
                 confirmButtonText: 'Close'
             })
 
-            getServices()
+            getServicesForPages()
+            getNumberServices();
+            calcTotalNumberPages();
         }
         else {
             Swal.fire({
@@ -71,9 +91,25 @@ import Swal from 'sweetalert2';
         }
     }
 
+    const previousPage = () => {
+        if(actualPage.value > 1) {
+            const newPage = actualPage.value - 1
+            actualPage.value = newPage
+            getServicesForPages()
+        }
+    }
+
+    const nextPage = () => {
+        const newPage = actualPage.value + 1
+        actualPage.value = newPage
+        getServicesForPages()
+    }
+
     onMounted(() => {
         getServices();
-        getNumberServices()
+        getServicesForPages();
+        calcTotalNumberPages()
+        getNumberServices();
     });
 </script>
 
@@ -96,7 +132,7 @@ import Swal from 'sweetalert2';
                 </tr>
             </thead>
             <tbody class="bg-white w-full">
-                <tr class="border"  v-for="service in dataServices" :key="service._id">
+                <tr class="border"  v-for="service in dataServicesForPages" :key="service._id">
                     <td class="py-4 pl-7 text-sm">{{ service.name }}</td>
                     <td class="py-4 text-sm">${{ service.price }}</td>
                     <td class="py-4 text-sm">{{ service.description }}</td>
@@ -116,10 +152,10 @@ import Swal from 'sweetalert2';
 
         <div class="w-full flex justify-center items-center gap-10 pt-5">
             <span class="text-sm">Total Services: <strong>{{ countServices }}</strong></span>
-            <button class="text-sm w-fit p-2 bg-white border rounded-md hover:bg-slate-50 hover:transition-colors duration-300"><ChevronLeft/></button>
-            <span class="text-lg"><strong>1</strong></span>
-            <button class="text-sm w-fit p-2 bg-white border rounded-md hover:bg-slate-50 hover:transition-colors duration-300"><ChevronRight/></button>
-            <span class="text-sm">Total Pages: <strong>2</strong></span>
+            <button class="text-sm w-fit p-2 bg-white border rounded-md hover:bg-slate-50 hover:transition-colors duration-300" @click="previousPage"><ChevronLeft/></button>
+            <span class="text-lg"><strong>{{actualPage}}</strong></span>
+            <button class="text-sm w-fit p-2 bg-white border rounded-md hover:bg-slate-50 hover:transition-colors duration-300" @click="nextPage"><ChevronRight/></button>
+            <span class="text-sm">Total Pages: <strong>{{ totalPages }}</strong></span>
         </div>
 
     </div>

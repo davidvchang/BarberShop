@@ -4,6 +4,7 @@ import serviceController from '../controllers/services.controller.js';
 const router = Router();
 
 router.get("/", serviceController.getService)
+router.get("/pages", serviceController.getServicePages)
 router.post("/", serviceController.postService)
 
 router.get("/:id", serviceController.getOneService)

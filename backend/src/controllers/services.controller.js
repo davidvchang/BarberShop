@@ -2,9 +2,24 @@ import serviceModels from '../models/services.model.js'
 
 const serviceController = {}
 
+serviceController.getServicePages = async (req, res) => {
+    try {
+
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 7;
+        const skip = (page - 1) * limit;
+
+        const service = await serviceModels.find().skip(skip).limit(limit);
+        res.status(200).json(service)
+    } catch (ex) {
+        res.status(500).send({message: "An error occurred while getting services", error: ex.message})
+        console.log(ex)
+    }
+}
+
 serviceController.getService = async (req, res) => {
     try {
-        const service = await serviceModels.find()
+        const service = await serviceModels.find();
         res.status(200).json(service)
     } catch (ex) {
         res.status(500).send({message: "An error occurred while getting services", error: ex.message})
