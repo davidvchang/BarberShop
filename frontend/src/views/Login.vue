@@ -14,12 +14,12 @@
             email: email.value,
             password: password.value
         }
-        
-        try {
             const res = await axios.post(`${urlLogin}/login`, dataLogin)
             console.log("res: ", res)
     
             if (res.status === 200) {
+
+                localStorage.setItem('authToken', res.data.token);
     
                 Swal.fire({
                     title: "Login Successful",
@@ -39,10 +39,6 @@
                     confirmButtonText: "OK",
                 });
             }
-            
-        } catch (ex) {
-            console.log("HA OCURRIDO UN ERROR: ", ex)
-        }
 
     }
 </script>

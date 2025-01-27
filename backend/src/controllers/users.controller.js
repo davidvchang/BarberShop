@@ -1,5 +1,10 @@
 import userModels from '../models/users.model.js'
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const userController = {}
 
@@ -16,6 +21,11 @@ userController.postUser = async (req, res) => {
     const {name, lastname, phone_number, email, password, type_user} = req.body
     try {
 
+        const existingUser = await userModels.findOne({ email });
+        if (existingUser) {
+            return res.status(400).send({ message: 'The user already exist' });
+        }
+
         //ENCRYPT PASSWORD
         const hashedPassword = await bcrypt.hash(password, 10)
 
@@ -29,7 +39,10 @@ userController.postUser = async (req, res) => {
         })
 
         await newUser.save();
-        res.status(201).send("The user has been created correctly.")
+
+        const token = jwt.sign({ userId: newUser._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
+
+        res.status(201).send({ message: 'The user has been created correctly.', token: token})
     } catch (ex) {
         res.status(500).send({message: "An error occurred while registering", error: ex.message})
     }
@@ -49,7 +62,8 @@ userController.getLoginUser = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
 
         if(isMatch) {
-            res.status(200).json({ message: "Login successful", email: user.email });
+            const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
+            res.status(200).json({ message: "Login successful", email: user.email, token: token });
         }
         else {
             res.status(400).json({ message: "Invalid password" });

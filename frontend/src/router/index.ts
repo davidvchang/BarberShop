@@ -43,4 +43,19 @@ const router = createRouter({
   ],
 })
 
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = localStorage.getItem('authToken'); // Verificar si el token existe
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // Si la ruta requiere autenticación y no estamos autenticados, redirigir al login
+    if (!isAuthenticated) {
+      next({ name: 'LoginPage' });
+    } else {
+      next(); // Continuar con la navegación
+    }
+  } else {
+    next(); // Continuar con la navegación si la ruta no requiere autenticación
+  }
+});
+
 export default router
