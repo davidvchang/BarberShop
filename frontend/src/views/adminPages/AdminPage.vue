@@ -1,8 +1,8 @@
   <script setup lang="ts">
     import { Users, Calendar} from 'lucide-vue-next';
 
-    import CountStatisticsContainer from '../components/CountStatisticsContainer.vue'
-    import TableAppointmentToday from '../components/TableAppointmentToday.vue'
+    import CountStatisticsContainer from '../../components/CountStatisticsContainer.vue'
+    import TableAppointmentToday from '../../components/TableAppointmentToday.vue'
   </script>
 
 

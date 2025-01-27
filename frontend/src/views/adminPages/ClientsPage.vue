@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TableClients from '../components/TableClients.vue'
+import TableClients from '../../components/TableClients.vue'
 
 </script>
 

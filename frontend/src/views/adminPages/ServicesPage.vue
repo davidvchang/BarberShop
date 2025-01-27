@@ -1,7 +1,7 @@
 <script setup lang="ts">
-    import TableServices from '../components/TableServices.vue'
-    import BtnAdd from '../components/BtnAdd.vue'
-    import AddService from '../views/AddService.vue'
+    import TableServices from '../../components/TableServices.vue'
+    import BtnAdd from '../../components/BtnAdd.vue'
+    import AddService from '../../views/adminPages/AddService.vue'
     import { ref } from 'vue';
 
     const valueModal = ref(false)
