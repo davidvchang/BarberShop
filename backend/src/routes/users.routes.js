@@ -5,6 +5,7 @@ const router = Router()
 
 router.get("/", userController.getUser)
 router.post("/", userController.postUser)
+router.get("/exist/:email", userController.getExistUser)
 
 //LOGIN
 router.post("/login", userController.getLoginUser);

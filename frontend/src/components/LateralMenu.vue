@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { LayoutDashboard, Users, Scissors, Settings, LogOut } from 'lucide-vue-next';
 import NavMenu from './NavMenu.vue';
+import router from '@/router';
+
+const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    // sessionStorage.removeItem('token');
+    router.push('/');
+};
 </script>
 
 <template>
@@ -29,7 +36,10 @@ import NavMenu from './NavMenu.vue';
 
 
         <div>
-            <NavMenu to="" name="Log Out" :icon="LogOut"/>
+            <button class=" py-3 p-5 rounded-lg flex items-center gap-3 hover:bg-[#f03b3b] hover:text-white hover:transition duration-300 w-full" @click="handleLogout">
+                <LogOut class="w-6 h-6"/>
+                Log Out
+            </button>
         </div>
     </div>
 </template>

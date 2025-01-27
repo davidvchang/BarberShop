@@ -49,7 +49,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // Si la ruta requiere autenticación y no estamos autenticados, redirigir al login
     if (!isAuthenticated) {
-      next({ name: 'LoginPage' });
+      next({ name: 'Login' });
     } else {
       next(); // Continuar con la navegación
     }

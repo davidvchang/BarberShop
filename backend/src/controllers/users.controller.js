@@ -17,6 +17,21 @@ userController.getUser = async (req, res) => {
     }
 }
 
+userController.getExistUser = async (req, res) => {
+    const {email} = req.params
+    try {
+        const existingUser = await userModels.findOne({email})
+        if (existingUser) {
+            return res.status(400).send({ message: 'The user already exist' });
+        }
+        else{
+            return res.status(200).send({ message: 'The email is available' });
+        }
+    } catch (ex) {
+        res.status(500).send({message: "An error occurred while getting user", error: ex.message})
+    }
+}
+
 userController.postUser = async (req, res) => {
     const {name, lastname, phone_number, email, password, type_user} = req.body
     try {

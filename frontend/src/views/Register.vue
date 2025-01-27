@@ -8,6 +8,8 @@
 
     const marchPasswords = ref<boolean>(true)
     const showPasswordError = ref<boolean>(false)
+    const existEmail = ref<boolean>(true)
+    const showExistEmail = ref<boolean>(false)
 
     interface DataUser {
         name: string,
@@ -51,7 +53,28 @@
         }
     }
 
+    const existUser = async () => {
+        try {
+            const res = await axios.get(`${urlUsers}/exist/${formData.email}`);
+            
+            if (res.data.message === 'The email is available') {
+                existEmail.value = false
+                return true;
+            } else {
+                existEmail.value = true
+                return false;
+            }
+        } catch (ex) {
+            console.error("Error checking user existence: ", ex);
+            return false;
+        }
+    }
+
     const handleSubmitUser = async () => {
+        await existUser();
+        showExistEmail.value = existEmail.value
+
+
         verificationPasswords()
         showPasswordError.value = !marchPasswords.value;
 
@@ -80,6 +103,7 @@
                 })
             }
         }
+
     }
 </script>
 
@@ -119,6 +143,7 @@
                 <div>
                     <span>Email</span>
                     <input type="email" v-model="formData.email" required name="email" id="email" class="mt-1 block w-full py-2 px-5 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
+                    <span class="text-red-500 font-medium text-center" v-if="showExistEmail">Email already exist</span>
                 </div>
 
                 <div class="flex flex-col gap-1">
