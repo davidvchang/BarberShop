@@ -3,6 +3,7 @@ import AdminPage from '../views/AdminPage.vue'
 import ClientsPage from '../views/ClientsPage.vue'
 import ServicesPage from '../views/ServicesPage.vue'
 import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
 
 
 const router = createRouter({
@@ -12,6 +13,11 @@ const router = createRouter({
       path: '/',
       name: 'Login',
       component: Login,
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register,
     },
     {
       path: '/dashboard',
