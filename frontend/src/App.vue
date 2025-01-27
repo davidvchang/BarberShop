@@ -5,7 +5,7 @@
 
 <template>
   <main>
-    <!-- <NavBar/> -->
+    <NavBar/>
     <div>
       <RouterView />
     </div>
