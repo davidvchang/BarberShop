@@ -2,15 +2,32 @@
     import { ArrowLeft } from 'lucide-vue-next';
     import axios from "axios";
     import Swal from "sweetalert2";
+    import { reactive} from "vue";
 
     const urlUsers = import.meta.env.VITE_POST_USERS
 
-    const handleSubmit = async () => {
-        const res = await axios.post(`${urlUsers}/`)
+    interface DataUser {
+        name: string,
+        lastname: string,
+        phone_number: string,
+        email: string,
+        password: string
+    }
+
+    const formData = reactive<DataUser>({
+        name: "",
+        lastname: "",
+        phone_number: "",
+        email: "",
+        password: ""
+    });
+
+    const handleSubmitUser = async () => {
+        const res = await axios.post(`${urlUsers}/`, formData)
         if(res.status === 201){
             Swal.fire({
                 title: 'Saved',
-                text: 'The service has been saved correctly.',
+                text: 'The user has been saved correctly.',
                 icon: 'success',
                 confirmButtonText: 'Close'
             })
@@ -18,7 +35,7 @@
         else {
             Swal.fire({
                 title: 'Error',
-                text: 'Has been happened a error while saved the service.',
+                text: 'Has been happened a error while saved the user.',
                 icon: 'error',
                 confirmButtonText: 'Close'
             })
@@ -28,21 +45,19 @@
 
 <template>
     <div class="w-full flex items-center justify-center bg-BGPrincipal" style="height: calc(100dvh - 3.5rem);">
-        <form @submit.prevent="handleSubmit">
-
-
+        <form @submit.prevent="handleSubmitUser">
             <div class="flex flex-col border w-[30rem] p-10 bg-white rounded-lg gap-5 shadow-md">
                 <span class="text-2xl font-medium text-center">Register</span>
     
                 <div class="flex gap-5">
                     <div>
                         <span class="font-medium">Name</span>
-                        <input type="text" required name="name" id="name" class="mt-1 block w-full py-2 px-5 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
+                        <input type="text" v-model="formData.name" required name="name" id="name" class="mt-1 block w-full py-2 px-5 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
                     </div>
         
                     <div>
                         <span class="font-medium">Last Name</span>
-                        <input type="text" required name="last_name" id="last_name" class="mt-1 block w-full py-2 px-5 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
+                        <input type="text" v-model="formData.lastname" required name="last_name" id="last_name" class="mt-1 block w-full py-2 px-5 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
                     </div>
     
                 </div>
@@ -57,13 +72,13 @@
                     </div>
                     <div class="w-full">
                         <span>Phone Number</span>
-                        <input type="text" required name="phone_number" id="phone_number" class="mt-1 block w-full py-2 px-5 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
+                        <input type="text" v-model="formData.phone_number" required name="phone_number" id="phone_number" class="mt-1 block w-full py-2 px-5 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
                     </div>
                 </div>
     
                 <div>
                     <span>Email</span>
-                    <input type="email" required name="email" id="email" class="mt-1 block w-full py-2 px-5 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
+                    <input type="email" v-model="formData.email" required name="email" id="email" class="mt-1 block w-full py-2 px-5 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
                 </div>
     
                 <div class="flex gap-5">
@@ -74,7 +89,7 @@
         
                     <div>
                         <span>Confirm Password</span>
-                        <input type="password" required name="confirm_password" id="confirm_password" class="mt-1 block w-full py-2 px-5 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
+                        <input type="password" v-model="formData.password" required name="confirm_password" id="confirm_password" class="mt-1 block w-full py-2 px-5 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
                     </div>
     
                 </div>
