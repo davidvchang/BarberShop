@@ -28,3 +28,5 @@ userController.postUser = async (req, res) => {
         res.status(500).send({message: "An error occurred while registering", error: ex.message})
     }
 }
+
+export default userController
