@@ -54,9 +54,9 @@
 
 
             <div class="w-full flex gap-5">
-                <button class="w-fit p-2 rounded-full border shadow-sm font-medium text-sm hover:bg-slate-50 hover:transition duration-300">
+                <RouterLink to="/" class="w-fit p-2 rounded-full border shadow-sm font-medium text-sm hover:bg-slate-50 hover:transition duration-300">
                     <ArrowLeft/>
-                </button>
+                </RouterLink>
 
                 <button 
                     type="submit" 
