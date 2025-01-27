@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
+
+    type_user: {
+        type: String,
+        require: true,
+    }
 }, {
     //Guarda cuando se creó y actualizó el documento
     timestamps: true 

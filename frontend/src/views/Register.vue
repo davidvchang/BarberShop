@@ -16,7 +16,8 @@
         phone_number: string,
         email: string,
         password: string,
-        confirm_password: string
+        confirm_password: string,
+        type_user: string
     }
 
     const formData = reactive<DataUser>({
@@ -26,7 +27,8 @@
         phone_number: "",
         email: "",
         password: "",
-        confirm_password: ""
+        confirm_password: "",
+        type_user: "Client"
     });
 
     const cleanInputs = () => {
