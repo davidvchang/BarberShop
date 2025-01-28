@@ -4,12 +4,32 @@
     import Swal from 'sweetalert2';
     import { ref } from 'vue';
 
-    const urlLogin = import.meta.env.VITE_POST_USERS
+    const urlLogin:string = import.meta.env.VITE_POST_USERS
 
-    const email = ref("");
-    const password = ref("");
+    const email = ref<string>("");
+    const password = ref<string>("");
+    const emailFound = ref<boolean>(true)
+    const showExistEmail = ref<boolean>(false)
+    const isCorrectPassword = ref<boolean>(true)
+
+
+    const existEmail = async () => {
+        const res = await axios.get(`${urlLogin}/exist/${email.value}`)
+
+        if (res.data.message === 'The email is available') {
+                emailFound.value = true
+                return true;
+            } else {
+                emailFound.value = false
+                return false;
+            }
+    }
 
     const handleLogin = async () => {
+        await existEmail();
+        showExistEmail.value = emailFound.value
+
+
         const dataLogin = {
             email: email.value,
             password: password.value
@@ -31,14 +51,6 @@
             // Redirige al usuario a la página principal o dashboard
             router.push("/dashboard");
         }
-        else {
-            Swal.fire({
-                title: "Error",
-                text: "Email or/and password incorrect!",
-                icon: "error",
-                confirmButtonText: "OK",
-            });
-        }
 
     }
 </script>
@@ -52,6 +64,10 @@
                 <div>
                     <span class="font-medium">Email</span>
                     <input type="email" v-model="email" name="email" id="email" class="mt-1 block w-full py-2 px-5 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
+                    
+                    <span class="text-red-500 font-medium text-center text-sm" v-if="showExistEmail">
+                        Email not found
+                    </span>
                 </div>
     
                 <div>
@@ -59,6 +75,8 @@
                     <input type="password" v-model="password" name="password" id="password" class="mt-1 block w-full py-2 px-5 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
                     <p class="text-sm">Don´t have an account? <RouterLink to="/register" class="text-blue-500 underline">Register</RouterLink></p>
                 </div>
+
+                
     
                 <button
                     type="submit"
