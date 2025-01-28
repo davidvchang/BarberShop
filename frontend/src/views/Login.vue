@@ -8,34 +8,35 @@
 
     const email = ref<string>("");
     const password = ref<string>("");
-    const emailFound = ref<boolean>(true)
-    const showExistEmail = ref<boolean>(false)
-    const isCorrectPassword = ref<boolean>(true)
+    // const emailFound = ref<boolean>(false)
+    // const showExistEmail = ref<boolean>(false)
+    // const showCorrectPassword = ref<boolean>(false)
 
 
-    const existEmail = async () => {
-        const res = await axios.get(`${urlLogin}/exist/${email.value}`)
+    // const existEmail = async () => {
+    //     const encodedEmail = encodeURIComponent(email.value);
+    //     const res = await axios.get(`${urlLogin}/exist/${encodedEmail}`)
 
-        if (res.data.message === 'The email is available') {
-                emailFound.value = true
-                return true;
-            } else {
-                emailFound.value = false
-                return false;
-            }
-    }
+    //     if (res.data.message === 'The email is available') {
+    //         emailFound.value = false
+    //         showExistEmail.value = true;
+    //         return false;
+    //     } else {
+    //         emailFound.value = true
+    //         showExistEmail.value = false; 
+    //         return true;
+    //     }
+    // }
 
     const handleLogin = async () => {
-        await existEmail();
-        showExistEmail.value = emailFound.value
-
+        // await existEmail();
 
         const dataLogin = {
             email: email.value,
             password: password.value
         }
+        
         const res = await axios.post(`${urlLogin}/login`, dataLogin)
-        console.log("res: ", res)
 
         if (res.status === 200) {
 
@@ -51,7 +52,7 @@
             // Redirige al usuario a la página principal o dashboard
             router.push("/dashboard");
         }
-
+        
     }
 </script>
 
@@ -65,9 +66,9 @@
                     <span class="font-medium">Email</span>
                     <input type="email" v-model="email" name="email" id="email" class="mt-1 block w-full py-2 px-5 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
                     
-                    <span class="text-red-500 font-medium text-center text-sm" v-if="showExistEmail">
+                    <!-- <span class="text-red-500 font-medium text-center text-sm" v-if="showExistEmail">
                         Email not found
-                    </span>
+                    </span> -->
                 </div>
     
                 <div>
@@ -75,8 +76,6 @@
                     <input type="password" v-model="password" name="password" id="password" class="mt-1 block w-full py-2 px-5 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm">
                     <p class="text-sm">Don´t have an account? <RouterLink to="/register" class="text-blue-500 underline">Register</RouterLink></p>
                 </div>
-
-                
     
                 <button
                     type="submit"
