@@ -6,8 +6,18 @@
 
     const urlLogin:string = import.meta.env.VITE_POST_USERS
 
+    interface DataGetApiUser {
+        _id: string,
+        name: string,
+        lastname: string,
+        phone_number: string,
+        email: string,
+        type_user: string
+    }
+
     const email = ref<string>("");
     const password = ref<string>("");
+    const typeUser = ref<string>("");
     // const emailFound = ref<boolean>(false)
     // const showExistEmail = ref<boolean>(false)
     // const showCorrectPassword = ref<boolean>(false)
@@ -28,6 +38,19 @@
     //     }
     // }
 
+    const getTypeUser = async () => {
+        const res = await axios.get(`${urlLogin}`)
+        console.log("res: ", res.data)
+
+        const userType = res.data.find((user: DataGetApiUser) => user.email === email.value)
+
+        if(userType && userType.type_user) {
+            typeUser.value = userType.type_user;
+        }
+
+        console.log(typeUser.value)
+    }
+
     const handleLogin = async () => {
         // await existEmail();
 
@@ -39,18 +62,25 @@
         const res = await axios.post(`${urlLogin}/login`, dataLogin)
 
         if (res.status === 200) {
-
+            
             localStorage.setItem('authToken', res.data.token);
-
+            
             Swal.fire({
                 title: "Login Successful",
                 text: "Welcome!",
                 icon: "success",
                 confirmButtonText: "OK",
             });
+            
+            await getTypeUser()
 
-            // Redirige al usuario a la página principal o dashboard
-            router.push("/dashboard");
+            if(typeUser.value === "Client") {
+                router.push("/clients/dashboard");
+            }
+            else if(typeUser.value === "Admin"){
+                router.push("/dashboard");
+            }
+
         }
         
     }

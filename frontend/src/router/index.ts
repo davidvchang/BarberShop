@@ -4,6 +4,7 @@ import ClientsPage from '../views/adminPages/ClientsPage.vue'
 import ServicesPage from '../views/adminPages/ServicesPage.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import UserPage from'../views/userPages/UserPage.vue'
 
 
 const router = createRouter({
@@ -39,7 +40,14 @@ const router = createRouter({
       path: '/services',
       name: 'ServicesPage',
       component: ServicesPage
-    }
+    },
+
+    {
+      path: '/clients/dashboard',
+      name: 'UserPage',
+      component: UserPage,
+      meta: { requiresAuth: true }
+    },
   ],
 })
 
